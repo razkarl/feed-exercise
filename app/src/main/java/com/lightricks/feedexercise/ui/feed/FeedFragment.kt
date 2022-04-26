@@ -51,7 +51,7 @@ class FeedFragment : Fragment() {
     }
 
     private fun setupViews() {
-        dataBinding.lifecycleOwner = viewLifecycleOwner
+        dataBinding.lifecycleOwner = viewLifecycleOwner  // RKARL: WTF..? Where does this variable come from?
         dataBinding.viewModel = viewModel
         feedAdapter = FeedAdapter()
         // Kotlin note: object expressions are similar to anonymous classes
