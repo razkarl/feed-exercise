@@ -19,5 +19,5 @@ interface FeedApiService {
     }
 
     @GET("feed.json")
-    fun getTemplatesMetadata(): Call<TemplatesMetadata>
+    suspend fun getTemplatesMetadata(): TemplatesMetadata
 }

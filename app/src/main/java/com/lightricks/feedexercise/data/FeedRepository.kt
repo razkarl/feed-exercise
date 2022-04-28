@@ -10,8 +10,7 @@ import com.lightricks.feedexercise.network.TemplatesMetadata
 class FeedRepository {
     private val feedApiService = FeedApiService.create()
 
-    fun getTemplatesMetadata(): TemplatesMetadata? {
-        val templatesMetadata = feedApiService.getTemplatesMetadata()
-        return templatesMetadata.execute().body()
+    suspend fun getTemplatesMetadata(): TemplatesMetadata? {
+        return feedApiService.getTemplatesMetadata()
     }
 }
