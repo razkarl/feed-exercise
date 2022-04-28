@@ -1,17 +1,16 @@
-package com.lightricks.feedexercise.data
+package data
 
 import org.junit.Test
 
-// for assertions on Java 8 types (Streams and java.util.Optional)
-import com.google.common.truth.Truth.assertThat
+import com.lightricks.feedexercise.data.FeedRepository
+import junit.framework.Assert.assertNotNull
 
 class FeedRepositoryUnitTest {
-   //todo: add the tests here
-
     @Test
-    fun FeedRepository_ValidGetRequest_ReturnsValidResponse(){
+    fun FeedRepository_getTemplateMetadata_NotNull(){
         val feedApiService = FeedRepository()
-        val response = feedApiService.getRequest("BikeThumbnail.jpg")
-        assertThat(response.toString().isNotEmpty())
+        val response = feedApiService.getTemplatesMetadata()
+        println(response)
+        assertNotNull(response)
     }
 }

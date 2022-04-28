@@ -1,25 +1,23 @@
 package com.lightricks.feedexercise.network
 
-import io.reactivex.Single
 import retrofit2.Call
 import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
-import retrofit2.http.Path
 
-/**
- * todo: add the FeedApiService interface and the Retrofit and Moshi code here
- */
 interface FeedApiService {
     companion object {
-        val baseURL: String = "http://assets.swishvideoapp.com/Android/demo/catalog/thumbnails/"
+        val BASE_URL: String = "https://assets.swishvideoapp.com/Android/demo/"
+
+        fun create() : FeedApiService {
+            val retrofit = Retrofit.Builder()
+                .addConverterFactory(MoshiConverterFactory.create())
+                .baseUrl(BASE_URL)
+                .build()
+            return retrofit.create(FeedApiService::class.java)
+        }
     }
 
-    // Execute a GET request and return an RxJava’s Single that contains the response.
-    @GET("{uri}")
-    fun getRequest(@Path("uri") uri: String): Call<Single<GetFeedResponse>>
-}
-
-class GetFeedResponse {
-    // RKARL: TODO - Implement with Moshi
-    // Use Moshi to de-JSONify things
+    @GET("feed.json")
+    fun getTemplatesMetadata(): Call<TemplatesMetadata>
 }
