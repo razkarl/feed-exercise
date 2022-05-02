@@ -1,5 +1,13 @@
 package com.lightricks.feedexercise.database
 
-/**
- * todo: add Room's Entity data class(es) here
- */
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "feedItems")
+// See data/Models.kt : FeedItem
+data class FeedItemEntity(
+    @PrimaryKey val id: String,
+    @ColumnInfo val thumbnailUrl: String,
+    @ColumnInfo val isPremium: Boolean
+)
