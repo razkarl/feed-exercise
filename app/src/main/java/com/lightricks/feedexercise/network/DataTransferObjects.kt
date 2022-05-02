@@ -30,5 +30,5 @@ data class TemplateMetadata(
  */
 @JsonClass(generateAdapter = true)
 data class TemplatesMetadata(
-    @Json(name = "templatesMetadata") val templatesMetadata: List<TemplateMetadata>
+    @Json(name = "templatesMetadata") val templates: List<TemplateMetadata>
 )

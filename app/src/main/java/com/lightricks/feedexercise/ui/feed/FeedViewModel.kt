@@ -2,39 +2,53 @@ package com.lightricks.feedexercise.ui.feed
 
 import androidx.lifecycle.*
 import com.lightricks.feedexercise.data.FeedItem
+import com.lightricks.feedexercise.data.FeedRepository
 import com.lightricks.feedexercise.util.Event
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 
 /**
  * This view model manages the data for [FeedFragment].
  */
-open class FeedViewModel : ViewModel() {
-    private val stateInternal: MutableLiveData<State> = MutableLiveData<State>(DEFAULT_STATE)
-    private val networkErrorEvent = MutableLiveData<Event<String>>()
+open class FeedViewModel(
+    private val feedRepository: FeedRepository = FeedRepository(),
+    private val stateInternal: MutableLiveData<State> = MutableLiveData(DEFAULT_STATE),
+    private val networkErrorEvent: MutableLiveData<Event<String>> = MutableLiveData()
+) : ViewModel() {
 
-    fun getIsLoading(): LiveData<Boolean> {
-        //todo: fix the implementation
-        return MutableLiveData()
-    }
+    fun getIsLoading(): LiveData<Boolean> =
+        Transformations.map(stateInternal) { state -> state.isLoading }
 
-    fun getIsEmpty(): LiveData<Boolean> {
-        //todo: fix the implementation
-        return MutableLiveData()
-    }
+    fun getIsEmpty(): LiveData<Boolean> =
+        Transformations.map(stateInternal) { state -> state.feedItems.isNullOrEmpty() }
 
-    fun getFeedItems(): LiveData<List<FeedItem>> {
-        //todo: fix the implementation
-        return MutableLiveData()
-    }
+    fun getFeedItems(): LiveData<List<FeedItem>> =
+        Transformations.map(stateInternal) { state -> state.feedItems ?: emptyList() }
 
     fun getNetworkErrorEvent(): LiveData<Event<String>> = networkErrorEvent
 
     init {
+        viewModelScope.launch {
+            feedRepository.feedItemsFlow().collect { feedItems ->
+                stateInternal.value = stateInternal.value!!.copy(feedItems = feedItems)
+            }
+        }
         refresh()
     }
 
     fun refresh() {
-        //todo: fix the implementation
+        if (getState().isLoading) {
+            return
+        }
+        updateState { copy(isLoading = true) }  // RKARL: Wtf?
+        viewModelScope.launch {
+            try {
+                feedRepository.refreshFeedItems()
+            } finally {
+                updateState { copy(isLoading = false) }
+            }
+        }
     }
 
     private fun updateState(transform: State.() -> State) {
