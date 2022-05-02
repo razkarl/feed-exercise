@@ -7,7 +7,8 @@ import junit.framework.Assert.assertNotNull
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
 
-class FeedRepositoryUnitTest(private val testCoroutineDispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher()) {
+class FeedRepositoryUnitTest() {
+    private val testCoroutineDispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher()
 
     @Test
     fun FeedRepository_getTemplateMetadata_NotNull() = testCoroutineDispatcher.runBlockingTest{
