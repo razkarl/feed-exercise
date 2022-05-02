@@ -1,6 +1,7 @@
 package com.lightricks.feedexercise.data
 
 import com.lightricks.feedexercise.network.FeedApiService
+import com.lightricks.feedexercise.network.FeedApiService.Companion.THUMBNAILS_URL
 import com.lightricks.feedexercise.network.TemplateMetadata
 import com.lightricks.feedexercise.network.TemplatesMetadata
 import kotlinx.coroutines.flow.Flow
@@ -28,8 +29,7 @@ class FeedRepository(
     private fun feedItemFromTemplateMetadata(templateMetadata: TemplateMetadata): FeedItem =
         FeedItem(
             id = templateMetadata.id,
-            thumbnailUrl = "http://assets.swishvideoapp.com/Android/demo/catalog/thumbnails/"
-                    + templateMetadata.templateThumbnailURI,
+            thumbnailUrl = THUMBNAILS_URL + templateMetadata.templateThumbnailURI,
             isPremium = templateMetadata.isPremium
         )
 }

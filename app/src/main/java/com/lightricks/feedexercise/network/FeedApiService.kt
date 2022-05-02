@@ -1,15 +1,14 @@
 package com.lightricks.feedexercise.network
 
-import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 
 interface FeedApiService {
     companion object {
-        val BASE_URL: String = "https://assets.swishvideoapp.com/Android/demo/"
-
-        fun create() : FeedApiService {
+        const val BASE_URL: String = "https://assets.swishvideoapp.com/Android/demo/"
+        const val THUMBNAILS_URL: String = BASE_URL + "catalog/thumbnails/"
+        fun create(): FeedApiService {
             val retrofit = Retrofit.Builder()
                 .addConverterFactory(MoshiConverterFactory.create())
                 .baseUrl(BASE_URL)
