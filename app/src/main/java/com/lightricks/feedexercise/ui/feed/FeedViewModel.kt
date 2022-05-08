@@ -7,15 +7,13 @@ import com.lightricks.feedexercise.data.FeedRepository
 import com.lightricks.feedexercise.util.Event
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.lang.Exception
 import java.lang.IllegalArgumentException
 
 /**
  * This view model manages the data for [FeedFragment].
  */
 open class FeedViewModel(
-    private val feedRepository: FeedRepository
-) : ViewModel() {
+    private val feedRepository: FeedRepository) : ViewModel() {
     private val stateInternal: MutableLiveData<State> = MutableLiveData(DEFAULT_STATE)
     private val networkErrorEvent: MutableLiveData<Event<String>> = MutableLiveData()
 
@@ -73,14 +71,12 @@ open class FeedViewModel(
 
     data class State(
         val feedItems: List<FeedItem>?,
-        val isLoading: Boolean
-    )
+        val isLoading: Boolean)
 
     companion object {
         private val DEFAULT_STATE = State(
             feedItems = null,
-            isLoading = false
-        )
+            isLoading = false)
     }
 }
 
