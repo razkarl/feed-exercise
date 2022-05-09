@@ -19,7 +19,7 @@ class FeedAdapter: RecyclerView.Adapter<FeedItemHolder>() {
     var items: List<FeedItem> = emptyList()
         set(value) {
             val diff = DiffUtil.calculateDiff(FeedDiffer(field, value))
-            field = value
+            field = value  // RKARL: WTF.. Where is 'field' declared
             diff.dispatchUpdatesTo(this)
         }
 

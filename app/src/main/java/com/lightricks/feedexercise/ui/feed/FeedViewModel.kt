@@ -4,7 +4,10 @@ import android.content.Context
 import androidx.lifecycle.*
 import com.lightricks.feedexercise.data.FeedItem
 import com.lightricks.feedexercise.data.FeedRepository
+import com.lightricks.feedexercise.database.FeedItemsDatabase
 import com.lightricks.feedexercise.util.Event
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
@@ -91,6 +94,8 @@ class FeedViewModelFactory(private val context: Context) : ViewModelProvider.Fac
             throw IllegalArgumentException("factory used with a wrong class")
         }
         @Suppress("UNCHECKED_CAST")
-        return FeedViewModel(FeedRepository.instance) as T
+        val database = FeedItemsDatabase.getDatabase(context, CoroutineScope(SupervisorJob()))
+        val repository = FeedRepository(database.feedItemsDao())
+        return FeedViewModel(repository) as T
     }
 }
